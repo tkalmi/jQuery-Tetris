@@ -1,0 +1,130 @@
+html {
+  font-family: 'Shift', sans-serif;
+}
+.hidden {
+  display: none;
+}
+table {
+  background-color: #FFFFFF;
+}
+#mainGrid {
+  float: left;
+  width: 200px;
+  height: 400px;
+  border: 1px solid black;
+  -webkit-filter: opacity(100%);
+  filter: opacity(100%);
+}
+#gameOver {
+  font-weight: bold;
+  position: absolute;
+  width: 200px;
+  text-align: center;
+  top: 150px;
+}
+#buttons {
+  margin-top: 5px;
+}
+#nextGrid {
+  width: 80px;
+  height: 80px;
+  border: 1px solid black;
+}
+#sidePanel {
+  margin-left: 20px;
+  float: left;
+  line-height: 75%;
+}
+#sidePanel #controls {
+  padding: 0;
+  font-size: 80%;
+}
+#sidePanel #controls .key {
+  width: 10px;
+  float: left;
+}
+#sidePanel #controls .direction {
+  padding-left: 10px;
+}
+td {
+  background: #FFFFFF;
+}
+/* Made by bluehaus at http://codepen.io/bluehaus/pen/EfGyi */
+/* make keyframes that tell the start state and the end state of our object */
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.fade-in {
+  opacity: 0;
+  /* make things invisible upon start */
+  -webkit-animation: fadeIn ease-in 1;
+  /* call our keyframe named fadeIn, use animation ease-in and repeat it only 1 time */
+  -moz-animation: fadeIn ease-in 1;
+  animation: fadeIn ease-in 1;
+  -webkit-animation-fill-mode: forwards;
+  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  animation-duration: 1s;
+}
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.3;
+  }
+}
+@-moz-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.3;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.3;
+  }
+}
+.fade-out {
+  opacity: 1;
+  -webkit-animation: fadeOut ease-out 1;
+  /* call our keyframe named fadeOut, use animation ease-in and repeat it only 1 time */
+  -moz-animation: fadeOut ease-out 1;
+  animation: fadeOut ease-out 1;
+  -webkit-animation-fill-mode: forwards;
+  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 0.3)*/
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  animation-duration: 1s;
+}
