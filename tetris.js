@@ -1,5 +1,5 @@
 var tetris = {
-  colors: ['#000000', '#FF0000', '#00FF00', '#0000FF', '#FFCC00', '#FF00FF', '#00FFFF'],
+  colors: ['black', 'red', 'green', 'blue', 'yellow', 'magenta', 'cyan'],
   colSize: 'abcdefghijklmnopqrst',
   xLim: 10,
   yLim: 20,
@@ -63,12 +63,12 @@ var tetris = {
           var i, j;
           for (i = row; i > 0; i--) {
             for (j = 0; j < 10; j++) {
-              var shiftedCol = $(['#', tetris.colSize[i - 1], j.toString()].join('')).css('background');
-              $(['#', tetris.colSize[i], j.toString()].join('')).css('background', shiftedCol.toString());
+              var shiftedCol = $(['#', tetris.colSize[i - 1], j.toString()].join('')).attr('class');
+              $(['#', tetris.colSize[i], j.toString()].join('')).removeClass().addClass(shiftedCol.toString());
             }
           }
           for (j = 0; j < 10; j++)
-            $(['#', tetris.colSize[0], j.toString()].join('')).css('background', '#FFFFFF');
+            $(['#', tetris.colSize[0], j.toString()].join('')).removeClass().addClass('white');
         }
       },
   blockTypes:
@@ -134,7 +134,7 @@ var tetris = {
     $('#level').text(tetris.level.toString());
     $('#lines').text(tetris.lines.toString());
     $('td').each(function() {
-      $(this).css('background', '#FFFFFF');
+      $(this).removeClass().addClass('white');
     });
     tetris.clearNext();
     tetris.curBlock = tetris.randBlock();
@@ -172,7 +172,7 @@ var tetris = {
     // Clears the currently active block from screen
     for (var key in this.blockTypes[this.curBlock.type][this.curBlock.rotation]) {
       var coord = this.blockTypes[this.curBlock.type][this.curBlock.rotation][key];
-      $(['#', this.colSize[coord[1] + this.curBlock.pos.y], (coord[0] + this.curBlock.pos.x).toString()].join('')).css('background', '#FFFFFF');
+      $(['#', this.colSize[coord[1] + this.curBlock.pos.y], (coord[0] + this.curBlock.pos.x).toString()].join('')).removeClass().addClass('white');
     }
   },
 
@@ -180,7 +180,7 @@ var tetris = {
     // Clears the next from side panel
     for (var i = 0; i < 4; i++) {
       for (var j = 0; j < 4; j++) {
-        $(['#x', i.toString(), j.toString()].join('')).css('background', '#FFFFFF');
+        $(['#x', i.toString(), j.toString()].join('')).removeClass().addClass('white');
       }
     }
   },
@@ -189,12 +189,7 @@ var tetris = {
     // Draws the currently active block
     for (var key in this.blockTypes[this.curBlock.type][this.curBlock.rotation]) {
       var coord = this.blockTypes[this.curBlock.type][this.curBlock.rotation][key];
-      $(['#',
-        this.colSize[coord[1] + this.curBlock.pos.y], (coord[0] + this.curBlock.pos.x).toString()].join(''))
-              .css('background', ['-webkit-linear-gradient(45deg, white, ', this.colors[this.curBlock.color], ')'].join(''))
-              .css('background', ['-o-linear-gradient(45deg, white, ', this.colors[this.curBlock.color], ')'].join(''))
-              .css('background', ['-moz-linear-gradient(4deg, white, ', this.colors[this.curBlock.color], ')'].join(''))
-              .css('background', ['linear-gradient(135deg, white, ', this.colors[this.curBlock.color], ')'].join(''));
+      $(['#', this.colSize[coord[1] + this.curBlock.pos.y], (coord[0] + this.curBlock.pos.x).toString()].join('')).removeClass().addClass(this.colors[this.curBlock.color]);
     }
   },
 
@@ -202,11 +197,7 @@ var tetris = {
     // Draws the block next up to the side panel
     for (var key in this.blockTypes[this.nextBlock.type][0]) {
       var coord = this.blockTypes[this.nextBlock.type][0][key];
-      $(['#x', (coord[1] + 1).toString(), (coord[0] + 1).toString()].join(''))
-              .css('background', ['-webkit-linear-gradient(45deg, white, ', this.colors[this.nextBlock.color], ')'].join(''))
-              .css('background', ['-o-linear-gradient(45deg, white, ', this.colors[this.nextBlock.color], ')'].join(''))
-              .css('background', ['-moz-linear-gradient(4deg, white, ', this.colors[this.nextBlock.color], ')'].join(''))
-              .css('background', ['linear-gradient(135deg, white, ', this.colors[this.nextBlock.color], ')'].join(''));
+      $(['#x', (coord[1] + 1).toString(), (coord[0] + 1).toString()].join('')).removeClass().addClass(this.colors[this.nextBlock.color]);
     }
   },
 

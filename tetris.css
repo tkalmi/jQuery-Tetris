@@ -4,6 +4,51 @@ html {
 .hidden {
   display: none;
 }
+.white {
+  background: #FFFFFF;
+}
+.black {
+  background: -webkit-linear-gradient(45deg, white, #000000);
+  background: -moz-linear-gradient(45deg, white, #000000);
+  background: -o-linear-gradient(45deg, white, #000000);
+  background: linear-gradient(135deg, white, #000000);
+}
+.red {
+  background: -webkit-linear-gradient(45deg, white, #FF0000);
+  background: -moz-linear-gradient(45deg, white, #FF0000);
+  background: -o-linear-gradient(45deg, white, #FF0000);
+  background: linear-gradient(135deg, white, #FF0000);
+}
+.green {
+  background: -webkit-linear-gradient(45deg, white, #00FF00);
+  background: -moz-linear-gradient(45deg, white, #00FF00);
+  background: -o-linear-gradient(45deg, white, #00FF00);
+  background: linear-gradient(135deg, white, #00FF00);
+}
+.blue {
+  background: -webkit-linear-gradient(45deg, white, #0000FF);
+  background: -moz-linear-gradient(45deg, white, #0000FF);
+  background: -o-linear-gradient(45deg, white, #0000FF);
+  background: linear-gradient(135deg, white, #0000FF);
+}
+.yellow {
+  background: -webkit-linear-gradient(45deg, white, #FFCC00);
+  background: -moz-linear-gradient(45deg, white, #FFCC00);
+  background: -o-linear-gradient(45deg, white, #FFCC00);
+  background: linear-gradient(135deg, white, #FFCC00);
+}
+.magenta {
+  background: -webkit-linear-gradient(45deg, white, #FF00FF);
+  background: -moz-linear-gradient(45deg, white, #FF00FF);
+  background: -o-linear-gradient(45deg, white, #FF00FF);
+  background: linear-gradient(135deg, white, #FF00FF);
+}
+.cyan {
+  background: -webkit-linear-gradient(45deg, white, #00FFFF);
+  background: -moz-linear-gradient(45deg, white, #00FFFF);
+  background: -o-linear-gradient(45deg, white, #00FFFF);
+  background: linear-gradient(135deg, white, #00FFFF);
+}
 table {
   background-color: #FFFFFF;
 }
