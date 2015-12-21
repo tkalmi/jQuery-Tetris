@@ -30,25 +30,28 @@ var tetris = {
   ],
 
         getPos: function(x, y) {
+          // Get the state of the cell in the given coordinates (1 = occupied, 0 = non-occupied)
           if (y + 1 < 0 || x < 0)
             return 0;
           return this.grid[y + 1][x];
         },
 
         setPos: function(x, y, state) {
+          // Mark given coordinates as occupied or non-occupied
           if (y >= 0)
             this.grid[y + 1][x] = state;
         },
 
         clearAll: function() {
+          // Clear everything in the grid
           for (var y = 0; y < tetris.yLim; y++) {
             for (var x = 0; x < tetris.xLim; x++)
               this.setPos(x, y, 0);
           }
-          // TODO: tyhjennä grid väreistä
         },
 
         stopBlock: function(block) {
+          // Mark the block permanently into the grid
           for (var i = 0; i < tetris.blockTypes[block.type][block.rotation].length; i++) {
             this.setPos(parseInt(tetris.blockTypes[block.type][block.rotation][i][0]) + parseInt(block.pos.x),
                         parseInt(tetris.blockTypes[block.type][block.rotation][i][1]) + parseInt(block.pos.y),
@@ -57,6 +60,7 @@ var tetris = {
         },
 
         deleteRow: function(row) {
+          // Delete the row given as parameter
           this.grid.splice(row, 1);
           this.grid.unshift([0,0,0,0,0,0,0,0,0,0]);
           row--;
@@ -202,6 +206,7 @@ var tetris = {
   },
 
   moveLeft: function() {
+    // Move current block left
     tetris.clearCur();
     tetris.curBlock.pos.x--;
     if (tetris.isCollision(tetris.blockTypes[tetris.curBlock.type][tetris.curBlock.rotation], tetris.curBlock.pos.x, tetris.curBlock.pos.y))
@@ -210,6 +215,7 @@ var tetris = {
   },
 
   moveRight: function() {
+    // Move current block right
     tetris.clearCur();
     tetris.curBlock.pos.x++;
     if (tetris.isCollision(tetris.blockTypes[tetris.curBlock.type][tetris.curBlock.rotation], tetris.curBlock.pos.x, tetris.curBlock.pos.y))
@@ -218,6 +224,7 @@ var tetris = {
   },
 
   moveDown: function() {
+    // Move current block down
     tetris.clearCur();
     tetris.curBlock.pos.y++;
     if (tetris.isCollision(tetris.blockTypes[tetris.curBlock.type][tetris.curBlock.rotation], tetris.curBlock.pos.x, tetris.curBlock.pos.y)) {
@@ -240,30 +247,32 @@ var tetris = {
   },
 
   rotate: function() {
+    // Rotate current block
     tetris.clearCur();
     tetris.curBlock.rotation = (tetris.curBlock.rotation + 1) % tetris.blockTypes[tetris.curBlock.type].length;
     if (tetris.isCollision(tetris.blockTypes[tetris.curBlock.type][tetris.curBlock.rotation], tetris.curBlock.pos.x, tetris.curBlock.pos.y)) {
       tetris.curBlock.rotation--;
-      if (tetris.curBlock.rotation < 0)
+      if (tetris.curBlock.rotation < 0) // undo rotation if there is no space for it
         tetris.curBlock.rotation = tetris.blockTypes[tetris.curBlock.type].length - 1;
     }
     tetris.drawCur();
   },
 
   checkFullRow: function() {
+    // Check the grid for full rows
     var count = 0;
-    for (var i = 0; i < tetris.grid.grid.length; i++) {
+    for (var i = 0; i < tetris.grid.grid.length; i++) { // check every row
       var sum = 0;
       $.each(tetris.grid.grid[i], function() {
         sum += (this);
       });
-      if (sum === tetris.grid.grid[i].length) {
+      if (sum === tetris.grid.grid[i].length) { // if row is full, delete it
         count++;
         tetris.grid.deleteRow(i);
         i--;
       }
     }
-    switch (count) {
+    switch (count) { // give scores based on level and number of full rows
       case 1: tetris.score += tetris.level * 40; break;
       case 2: tetris.score += tetris.level * 100; break;
       case 3: tetris.score += tetris.level * 300; break;
@@ -271,7 +280,7 @@ var tetris = {
     }
     tetris.lines += count;
 
-    tetris.level = Math.floor(tetris.lines / 10) + 1;
+    tetris.level = Math.floor(tetris.lines / 10) + 1; // determine level
     // Set interval speed
     window.clearInterval(tetris.timer);
     tetris.speed = 600 - tetris.level;
@@ -283,6 +292,7 @@ var tetris = {
 
   land: function() {
     tetris.curBlock.pos.y--;
+    // Take the block back to a spot where it wasn't occupied
     tetris.grid.stopBlock(tetris.curBlock);
     tetris.drawCur();
     tetris.checkFullRow();
@@ -293,6 +303,7 @@ var tetris = {
   },
 
 	keyPress: function(e) {
+    // Bind different keys for controlling blocks
     if (tetris.running) {
   		switch ( e.charCode || e.keyCode ) {
         case 87: case 119: tetris.rotate(); break; // W
@@ -305,6 +316,7 @@ var tetris = {
 	},
 
   run: function() {
+    // Run the game
     tetris.running = true;
 	  tetris.drawCur();
     tetris.drawNext();
@@ -312,13 +324,14 @@ var tetris = {
   },
 
   pause: function() {
+    // Pause the game
     tetris.running = false;
     window.clearInterval(tetris.timer);
     tetris.timer = null;
   },
 
   endGame: function() {
-
+    // End the game
     tetris.pause();
     $('#gameOver').attr('class','fade-in');
     $('#startbtn').attr('class', '');
@@ -333,30 +346,37 @@ var tetris = {
 };
 
 $(document).ready(function() {
-  if ($.browser == 'msie')
-    $(document).keypress(tetris.keyPress);
-  else
-    $(window).keypress(tetris.keyPress);
-  $('#startbtn').click(function() {
+  if ($.browser == 'msie') {
+    $(document).unbind(); // unbind any keypresses left from navigating in this page before
+    $(document).keypress(tetris.keyPress); // bind keypresses to game
+  } else {
+    $(window).unbind(); // unbind any keypresses left from navigating in this page before
+    $(window).keypress(tetris.keyPress); // bind keypresses to game
+  }
+  $('#startbtn').click(function() { // initialize actions for "Start" button
     tetris.init();
     tetris.run();
     $(this).attr("class", "hidden");
     $('#pausebtn').attr('class', '');
     $('#stopbtn').attr('class', '');
   });
-  $('#pausebtn').click(function() {
+  $('#pausebtn').click(function() { // initialize actions for "Pause" button
   	tetris.pause();
   	$(this).attr("class", "hidden");
   	$('#continuebtn').attr('class', '');
   });
-  $('#continuebtn').click(function() {
+  $('#continuebtn').click(function() { // initialize actions for "Continue" button
     tetris.run();
     $(this).attr("class", "hidden");
     $('#pausebtn').attr('class','');
   });
-  $('#stopbtn').click(function() {
+  $('#stopbtn').click(function() { // initialize actions for "Stop" button
     tetris.endGame();
     $(this).attr("class", "hidden");
+  });
+  $(window).on('hashchange', function(e){ // clean the game screen when user navigates away from this URL
+    tetris.endGame();
+    tetris.init();
   });
   tetris.init();
 });
