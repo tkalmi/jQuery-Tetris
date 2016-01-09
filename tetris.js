@@ -347,10 +347,10 @@ var tetris = {
 
 $(document).ready(function() {
   if ($.browser == 'msie') {
-    $(document).unbind(); // unbind any keypresses left from navigating in this page before
+    $(document).unbind("keypress"); // unbind any keypresses left from navigating in this page before
     $(document).keypress(tetris.keyPress); // bind keypresses to game
   } else {
-    $(window).unbind(); // unbind any keypresses left from navigating in this page before
+    $(window).unbind("keypress"); // unbind any keypresses left from navigating in this page before
     $(window).keypress(tetris.keyPress); // bind keypresses to game
   }
   $('#startbtn').click(function() { // initialize actions for "Start" button
