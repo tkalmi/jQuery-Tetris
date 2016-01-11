@@ -346,13 +346,8 @@ var tetris = {
 };
 
 $(document).ready(function() {
-  if ($.browser == 'msie') {
-    $(document).unbind("keypress"); // unbind any keypresses left from navigating in this page before
-    $(document).keypress(tetris.keyPress); // bind keypresses to game
-  } else {
-    $(window).unbind("keypress"); // unbind any keypresses left from navigating in this page before
-    $(window).keypress(tetris.keyPress); // bind keypresses to game
-  }
+  $(document).unbind("keypress"); // unbind any keypresses left from navigating in this page before
+  $(document).keypress(tetris.keyPress); // bind keypresses to game
   $('#startbtn').click(function() { // initialize actions for "Start" button
     tetris.init();
     tetris.run();
@@ -377,6 +372,7 @@ $(document).ready(function() {
   $(window).on('hashchange', function(e){ // clean the game screen when user navigates away from this URL
     tetris.endGame();
     tetris.init();
+    $(document).unbind("keypress");
   });
   tetris.init();
 });
