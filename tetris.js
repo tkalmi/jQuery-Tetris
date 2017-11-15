@@ -341,6 +341,7 @@ var tetris = {
     // Blur the tetris grid if game is lost
     $('table').attr('class','fade-out');
     $('table').attr('class','fade-out');
+    $(document).unbind("keypress");
   }
 
 };
